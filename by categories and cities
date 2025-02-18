@@ -1,0 +1,21 @@
+//Categories
+
+SELECT
+category_name,
+item_description,
+round(sum(volume_sold_liters),1) as volume_sold_liters
+FROM `junior-398212.course_project.sales_2020_01_2023`
+group by category_name, item_description
+order by volume_sold_liters desc
+
+
+//Cities
+
+SELECT
+ city,
+ round(sum(volume_sold_liters),1) AS volume_sold_liters,
+ round(sum(sale_dollars - (state_bottle_cost*bottles_sold)),1) as profit
+FROM `junior-398212.course_project.sales_2020_01_2023`
+where city is not null
+group by city
+order by volume_sold_liters desc
