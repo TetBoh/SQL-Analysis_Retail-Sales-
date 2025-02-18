@@ -1,0 +1,43 @@
+//We look at the number of sales by date. 
+//We test the hypothesis that sales volume increases according to the seasons/holidays.
+
+WITH date_by_month AS (
+  SELECT 
+  extract(year from date) as year,
+  extract(month from date) as month,
+  volume_sold_liters,
+  FROM `junior-398212.course_project.sales_2020_01_2023`
+  )
+SELECT
+  year,
+  month,
+  round(sum(volume_sold_liters), 2) as volume_sold_liters,
+  round(max(sum(volume_sold_liters)) OVER (PARTITION BY year) - sum(volume_sold_liters), 2) AS difference_from_max,
+  max(round(sum(volume_sold_liters), 2)) OVER (PARTITION BY year) AS max_value,
+  min(round(sum(volume_sold_liters), 2)) OVER (PARTITION BY year) AS min_value,
+  
+FROM date_by_month
+group by year, month
+order by year, month
+
+//Analysis by season
+
+WITH date_by_month AS (
+  SELECT 
+  extract(year from date) as year,
+  extract(month from date) as month,
+  volume_sold_liters as volume_sold_l,
+  FROM `junior-398212.course_project.sales_2020_01_2023`
+  )
+SELECT
+  year,
+
+  (case when month in (12, 1, 2) then 'winter'
+      when month in (3, 4, 5) then 'spring'
+      when month in (6, 7, 8) then 'summer'
+      when month in (9, 10, 11) then 'autumn'
+ end) as season,
+  round(sum(volume_sold_l),2) as volume_sold_liters
+FROM date_by_month
+group by year, season
+order by year, season
