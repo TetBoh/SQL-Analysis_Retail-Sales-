@@ -1,3 +1,5 @@
+//Checking the number of missing values
+
 SELECT 
   SUM(CASE WHEN invoice_and_item_number IS NULL THEN 1 ELSE 0 END) AS invoice_and_item_number,
   SUM(CASE WHEN date IS NULL THEN 1 ELSE 0 END) AS date,
@@ -24,3 +26,71 @@ SELECT
   SUM(CASE WHEN volume_sold_liters IS NULL THEN 1 ELSE 0 END) AS volume_sold_liters,
   SUM(CASE WHEN volume_sold_gallons IS NULL THEN 1 ELSE 0 END) AS volume_sold_gallons
 FROM `junior-398212.course_project.sales_2020_01_2023`
+
+
+//Checking the duplicates
+
+SELECT 
+  invoice_and_item_number,
+  store_number,
+  store_name,
+  address,
+  city,
+  zip_code,
+  county_number,
+  county,
+  category,
+  category_name,
+  vendor_number,
+  vendor_name,
+  item_number,
+  item_description,
+  pack,
+  bottle_volume_ml,
+  state_bottle_cost,
+  state_bottle_retail,
+  bottles_sold,
+  sale_dollars,
+  volume_sold_liters,
+  volume_sold_gallons,
+  COUNT(*)
+FROM `junior-398212.course_project.sales_2020_01_2023`
+GROUP BY 
+  invoice_and_item_number,
+  store_number,
+  store_name,
+  address,
+  city,
+  zip_code,
+  county_number,
+  county,
+  category,
+  category_name,
+  vendor_number,
+  vendor_name,
+  item_number,
+  item_description,
+  pack,
+  bottle_volume_ml,
+  state_bottle_cost,
+  state_bottle_retail,
+  bottles_sold,
+  sale_dollars,
+  volume_sold_liters,
+  volume_sold_gallons
+HAVING 
+  COUNT(*) > 1
+
+//In this dataset, there are 3298 missing values ​​for the city column. 
+//Since this column is needed for further analysis, we will populate it based on the store_name column
+
+SELECT 
+  *
+FROM `junior-398212.course_project.sales_2020_01_2023` 
+WHERE city IS NULL
+
+//In the store_name column, after “/”, we take the name of the city and write it in the city column
+
+UPDATE course_project.sales_2020_01_2023
+SET city = TRIM(IFNULL(SPLIT(store_name, '/')[SAFE_OFFSET(1)], ''))
+WHERE city IS NULL
