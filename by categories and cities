@@ -19,3 +19,20 @@ FROM `junior-398212.course_project.sales_2020_01_2023`
 where city is not null
 group by city
 order by volume_sold_liters desc
+
+WITH calc AS (
+  SELECT 
+    city,
+    ROUND(SUM(volume_sold_liters), 1) AS volume_sold_liters,
+  FROM `junior-398212.course_project.sales_2020_01_2023`
+  GROUP BY city
+)
+
+
+//Cities by % sales
+SELECT 
+  city,
+  volume_sold_liters,
+  ROUND((volume_sold_liters / (SELECT SUM(volume_sold_liters) FROM calc)) * 100) AS percent_of_total_liters
+FROM calc
+ORDER BY percent_of_total_liters DESC
