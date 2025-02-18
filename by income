@@ -1,0 +1,18 @@
+//We group categories by income received and percentage of the total amount
+
+WITH category_profits AS (
+  SELECT 
+    category_name,
+    COUNT(bottles_sold) AS bottles_sold,
+    SUM(sale_dollars - (state_bottle_cost * bottles_sold)) AS profit
+  FROM `junior-398212.course_project.sales_2020_01_2023`
+  GROUP BY category_name
+)
+
+SELECT 
+  category_name,
+  bottles_sold,
+  ROUND(profit, 1) AS profit,
+  ROUND((profit / (SELECT SUM(profit) FROM category_profits)) * 100) AS percent_of_total_profit
+FROM category_profits
+ORDER BY profit DESC
