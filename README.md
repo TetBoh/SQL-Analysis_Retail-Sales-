@@ -20,11 +20,13 @@ The analysis of this dataset should answer the following questions:
 - Identifying and handling duplicates.
 - Analyzing dataset structure (categories, subcategories, etc.).
 - Filling in missing values based on available data.
+  
 2. Dataset Analysis:
 - Sales volume analysis by date/season.
 - Testing the hypothesis of increased sales during public holiday periods.
 - Profitability analysis of different alcohol categories.
 - Sales volume analysis by city.
+  
 3. Dashboard Visualization
   ![image](https://github.com/user-attachments/assets/2eb3903f-5461-4eb8-9d7d-aba7ec262f24)
   ![image](https://github.com/user-attachments/assets/1b35f87f-7bdd-4621-8044-22b282bfeb7d)
