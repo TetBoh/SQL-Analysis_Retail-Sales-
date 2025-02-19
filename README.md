@@ -2,6 +2,7 @@
 
 This dataset includes all alcoholic beverage ordering options from grocery stores, liquor stores, full-service stores, and more. It provides detailed information on store visits, the exact brand and size of alcoholic beverages, and the number of bottles ordered.
 
+
 **TASK**
 
 The analysis of this dataset should answer the following questions:
@@ -10,6 +11,7 @@ The analysis of this dataset should answer the following questions:
 - The highest-earning categories.
 - The highest-earning categories across different cities.
 - Seasonal trends and patterns in sales.
+
 
 **ANALYSIS STEPS** 
 
